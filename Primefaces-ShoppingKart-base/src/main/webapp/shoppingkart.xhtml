@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head></h:head>
+
+    <h:body>
+        <h:dataTable value="#{beanCarrito.productos}" var="itemX">
+            <h:column><br></br>
+               <f:facet name="header">item ID</f:facet>
+               #{itemX.id}
+               
+            </h:column>
+            <h:column>    				
+               <f:facet name="header">Nombre</f:facet>    				
+               #{itemX.nombre}
+            </h:column>
+                        
+            <h:column>
+                <f:facet name="header">Precio</f:facet>   
+                <h:outputText value="#{itemX.precioEnUSD}">
+                    
+                    <f:convertNumber currencySymbol="$" type="currency"/>
+                </h:outputText>
+            </h:column>            
+            <h:column>
+                <f:facet name="header">Seleccionar</f:facet>   
+                <p:commandButton value="seleccionar" update="formulario_adivinanza" actionListener="#{beanCarrito.seleccionarItem(itemX)}" ></p:commandButton>
+            </h:column>
+        </h:dataTable>
+        <h:form id="formulario_adivinanza">
+            el producto elegido es:
+            <p:outputLabel value="#{beanCarrito.itemName}"  ></p:outputLabel>
+        </h:form>
+
+        
+    </h:body>
+
+</html>
+
