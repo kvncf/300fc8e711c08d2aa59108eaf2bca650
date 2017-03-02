@@ -35,8 +35,8 @@
             <table>
                 <tr>
                     <td><p:outputLabel value="#{beanCarrito.itemName}"></p:outputLabel></td>
-                    <td><p:inputText style="width:40px;" id="cant" type="number" required="required" min="0" value="#{beanCarrito.cantActual}" placeholder="Cantidad"></p:inputText></td>
-                    <td><p:commandButton value="Guardar" actionListener="#{beanCarrito.agregar()}"></p:commandButton></td>
+                    <td><p:inputText style="width:40px;" id="cant" type="number" required="required" value="#{beanCarrito.cantActual}" placeholder="Cantidad"></p:inputText></td>
+                    <td><p:commandButton value="agregar a carrito" actionListener="#{beanCarrito.agregar()}"></p:commandButton></td>
                 </tr>
             </table>
             <br></br>
