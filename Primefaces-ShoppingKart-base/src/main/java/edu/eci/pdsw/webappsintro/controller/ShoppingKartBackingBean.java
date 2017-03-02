@@ -123,7 +123,6 @@ public class ShoppingKartBackingBean implements Serializable{
     private int updateCantidad(){
         int id=itemSelect.getId();
         setCantActual(0);
-        System.out.println(cantActual);
         for(int i=0;i<pedido.size();i++)
             if(pedido.get(i).getProducto().getId()==id)cantActual = pedido.get(i).getCantidad();
         return cantActual;
