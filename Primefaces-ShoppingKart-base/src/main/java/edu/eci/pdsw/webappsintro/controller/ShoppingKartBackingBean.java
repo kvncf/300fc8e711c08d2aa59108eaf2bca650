@@ -105,8 +105,8 @@ public class ShoppingKartBackingBean implements Serializable{
             }
         }
         if(!yaExiste){//si no habia sido agregado el producto
-            ProductoCarro p=new ProductoCarro(prod);
-            p.setCantidad(cant);
+            ProductoCarro p=new ProductoCarro(itemSelect);
+            p.setCantidad(cantActual);
             pedido.add(p);
         }   
         
