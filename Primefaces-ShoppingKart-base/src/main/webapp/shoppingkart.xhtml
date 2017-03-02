@@ -6,37 +6,41 @@
     <h:head></h:head>
 
     <h:body>
-        Seleccione su pedido:<br></br>
-        <h:dataTable value="#{beanCarrito.productos}" var="itemX">
-            <h:column><br></br>
-               <f:facet name="header">item ID</f:facet>
-               #{itemX.id}
-               
-            </h:column>
-            <h:column>    				
-               <f:facet name="header">Nombre</f:facet>    				
-               #{itemX.nombre}
-            </h:column>
-            <h:column>
-                <f:facet name="header">Precio</f:facet>   
-                <h:outputText value="#{itemX.precioEnUSD}">
-                    
-                    <f:convertNumber currencySymbol="$" type="currency"/>
-                </h:outputText>
-            </h:column>            
-            <h:column>
-                <f:facet name="header">Seleccionar</f:facet>   
-                <p:commandButton value="seleccionar" actionListener="#{beanCarrito.seleccionarItem(itemX)}" ></p:commandButton>
-            </h:column>
-        </h:dataTable>
-        <hr></hr>
+
         <h:form id="forr">
+            Seleccione su pedido:<br></br>
+            <h:dataTable value="#{beanCarrito.productos}" var="itemX">
+                <h:column><br></br>
+                    <f:facet name="header">item ID</f:facet>
+                        #{itemX.id}
+
+                </h:column>
+                <h:column>    				
+                    <f:facet name="header">Nombre</f:facet>    				
+                        #{itemX.nombre}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Precio</f:facet>   
+                    <h:outputText value="#{itemX.precioEnUSD}">
+
+                        <f:convertNumber currencySymbol="$" type="currency"/>
+                    </h:outputText>
+                </h:column>            
+                <h:column>
+                    <f:facet name="header">Seleccionar</f:facet>   
+                    <p:commandButton value="seleccionar" update=":forr:nombreProd,:forr:cant" actionListener="#{beanCarrito.seleccionarItem(itemX)}" ></p:commandButton>
+                </h:column>
+            </h:dataTable>
+            <hr></hr>
+
+
+
             el producto elegido es:<br></br>
             <table>
                 <tr>
-                    <td><p:outputLabel value="#{beanCarrito.itemName}"></p:outputLabel></td>
-                    <td><p:inputText style="width:40px;" id="cant" type="number" required="required" min="0" value="#{beanCarrito.cantActual}" placeholder="Cantidad"></p:inputText></td>
-                    <td><p:commandButton value="Guardar" actionListener="#{beanCarrito.agregar()}"></p:commandButton></td>
+                    <td><p:outputLabel id="nombreProd" value="#{beanCarrito.itemName}"></p:outputLabel></td>
+                <td><p:inputText style="width:40px;" id="cant" type="number" required="required" value="#{beanCarrito.cantActual}" placeholder="Cantidad"></p:inputText></td>
+                <td><p:commandButton value="agregar a carrito" actionListener="#{beanCarrito.agregar()}"></p:commandButton></td>
                 </tr>
             </table>
             <br></br>
@@ -46,14 +50,14 @@
         <h:dataTable value="#{beanCarrito.listaPedido}" var="itemY">
             <h:column>
                 <f:facet name="header">Nombre</f:facet>            
-                #{itemY[0]}
+                    #{itemY[0]}
             </h:column>
             <h:column>
                 <f:facet name="header">Cantidad</f:facet>
-                #{itemY[1]}
+                    #{itemY[1]}
             </h:column>
         </h:dataTable>
-        
+
     </h:body>
 
 </html>

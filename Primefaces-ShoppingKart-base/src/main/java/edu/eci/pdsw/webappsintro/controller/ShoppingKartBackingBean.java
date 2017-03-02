@@ -33,7 +33,7 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 
 public class ShoppingKartBackingBean implements Serializable{
-    private ArrayList<int[]> pedido=new ArrayList<int[]>();
+    private ArrayList<ProductoCarro> pedido=new ArrayList<ProductoCarro>();
     private Producto itemSelect = null;
     private String itemName="Para empezar selecciona un item";
     private int cantActual=0; 
@@ -46,25 +46,12 @@ public class ShoppingKartBackingBean implements Serializable{
             int[] p={idProd,cant};
             pedido.add(p);
             */
-            if(pedido.get(i)[1]!=0){
-                String[] tmp={nombreID(pedido.get(i)[0]),Integer.toString(pedido.get(i)[1])};
+            if(pedido.get(i).getCantidad()!=0){
+                String[] tmp={pedido.get(i).getProducto().getNombre(),Integer.toString(pedido.get(i).getCantidad())};
                 ListaPedido.add(tmp);
             }
         }
         return ListaPedido;
-    }
-    
-    
-    private String nombreID(int id){
-        List<Producto> p=getProductos();
-        String res="";
-        for(int i=0;i<p.size();i++){
-            if(p.get(i).getId()==id){
-                res=p.get(i).getNombre();
-                break;
-            }
-        }
-        return res;
     }
 
     public void setListaPedido(ArrayList<String[]> ListaPedido) {
@@ -92,14 +79,15 @@ public class ShoppingKartBackingBean implements Serializable{
         int cant=0;
         boolean yaExiste=false;
         for(int i=0; i<pedido.size();i++){
-            if(pedido.get(i)[0]==idProd){
-                pedido.get(i)[1]=cant;
+            if(pedido.get(i).getProducto().getId()==idProd){
+                pedido.get(i).setCantidad(cant);
                 yaExiste=true;
                 break;
             }
         }
         if(!yaExiste){//si no habia sido agregado el producto
-            int[] p={idProd,cant};
+            ProductoCarro p=new ProductoCarro(prod);
+            p.setCantidad(cant);
             pedido.add(p);
         }      
         
@@ -110,14 +98,15 @@ public class ShoppingKartBackingBean implements Serializable{
         cantActual = Math.max(0,cantActual);
         boolean yaExiste=false;
         for(int i=0; i<pedido.size();i++){
-            if(pedido.get(i)[0]==id){
-                pedido.get(i)[1]=cantActual;
+            if(pedido.get(i).getProducto().getId()==id){
+                pedido.get(i).setCantidad(cantActual);
                 yaExiste=true;
                 break;
             }
         }
         if(!yaExiste){//si no habia sido agregado el producto
-            int[] p={id,cantActual};
+            ProductoCarro p=new ProductoCarro(itemSelect);
+            p.setCantidad(cantActual);
             pedido.add(p);
         }   
         
@@ -133,10 +122,9 @@ public class ShoppingKartBackingBean implements Serializable{
     
     private int updateCantidad(){
         int id=itemSelect.getId();
-        cantActual=0;
-        for(int i=0;i<pedido.size();i++){
-            if(pedido.get(i)[0]==id)cantActual = pedido.get(i)[1];        
-        }         
+        setCantActual(0);
+        for(int i=0;i<pedido.size();i++)
+            if(pedido.get(i).getProducto().getId()==id)cantActual = pedido.get(i).getCantidad();
         return cantActual;
     }
     
