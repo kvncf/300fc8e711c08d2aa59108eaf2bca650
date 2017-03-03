@@ -35,25 +35,38 @@ import javax.faces.bean.SessionScoped;
 public class ShoppingKartBackingBean implements Serializable{
     private ArrayList<ProductoCarro> pedido=new ArrayList<ProductoCarro>();
     private Producto itemSelect = null;
-    private String itemName="Para empezar selecciona un item";
+    private String itemName="Para empezar selecciona un item: ";
     private int cantActual=0; 
     private ArrayList<String[]> ListaPedido;
+    private String moneda="COP";  
+    //private final static double tasa = CurrencyServices.getInstance().getUSDExchangeRateInCOP(); //pesos COP por 1 dolar USD
+
+    public String getMoneda() {
+        return moneda;
+    }
+
+    public void setMoneda(String mon) {
+        moneda = mon;
+    }
 
     public ArrayList<String[]> getListaPedido() {
         ListaPedido=new ArrayList<String[]>();
+        
+        
         for(int i=0;i<pedido.size();i++){
             /*
             int[] p={idProd,cant};
             pedido.add(p);
             */
             if(pedido.get(i).getCantidad()!=0){
-                String[] tmp={pedido.get(i).getProducto().getNombre(),Integer.toString(pedido.get(i).getCantidad())};
+                String[] tmp={pedido.get(i).getProducto().getNombre(),Integer.toString(pedido.get(i).getCantidad()), String.valueOf(getValor(pedido.get(i).getProducto().getPrecioEnUSD())*(pedido.get(i).getCantidad()))};
                 ListaPedido.add(tmp);
             }
         }
         return ListaPedido;
     }
 
+    
     public void setListaPedido(ArrayList<String[]> ListaPedido) {
         this.ListaPedido = ListaPedido;
     }
@@ -132,5 +145,13 @@ public class ShoppingKartBackingBean implements Serializable{
         itemName=prod.getNombre();
         itemSelect=prod;
         updateCantidad();
+    }    
+    
+    public double getValor(double precio){
+        System.out.println(moneda);
+        double cambio = 1;
+        if(moneda=="COP") cambio=getTasaCambioDolar();
+        return precio*cambio;
     }
+    
 }

@@ -6,13 +6,15 @@
 package edu.eci.pdsw.webappsintro.controller;
 
 import edu.eci.pdsw.stubs.servicesfacadestub.Producto;
+import java.io.Serializable;
 /**
  *
- * @author 2083722
+ * @author AlvaradoPerez
  */
-public class ProductoCarro{
+public class ProductoCarro implements Serializable{
     private int cantidad=0;
-    private Producto producto;
+    private Producto producto; 
+    
 
     public ProductoCarro(Producto producto) {
         this.producto=producto;
@@ -27,5 +29,7 @@ public class ProductoCarro{
 
     public Producto getProducto() {
         return producto;
-    }
+    }  
+    
+    
 }
