@@ -4,15 +4,12 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head></h:head>
-
+    <title> Kar.Bean</title>
     <h:body>
-            
+        
+        
         <h:form id="forr" >
-            
-        <p:selectOneMenu value="#{beanCarrito.moneda}" id="moneda" style="width:125px">
-            <f:selectItem itemLabel="USD" itemValue="USD" />
-            <f:selectItem itemLabel="COP" itemValue="COP" />                            
-        </p:selectOneMenu>
+         
             Seleccione su pedido:<br></br>
             <h:dataTable value="#{beanCarrito.productos}" var="itemX">
                 <h:column><br></br>
@@ -58,22 +55,30 @@
         Su pedido va asi:<br></br>
             <h:dataTable value="#{beanCarrito.listaPedido}" var="itemY">
                 <h:column>
-                    <f:facet name="header">Nombre</f:facet>            
+                    <f:facet name="header">|       Nombre ..........    |</f:facet>            
                         #{itemY[0]}
                 </h:column>
                 <h:column>
-                    <f:facet name="header">Cantidad</f:facet>
+                    <f:facet name="header">Cantidad     |</f:facet>
                     <h:outputText value=" #{itemY[1]}">
                         <f:convertNumber currencySymbol="$" type="currency"/>
                     </h:outputText>
                 </h:column>                
                 <h:column>
-                    <f:facet name="header">Precio</f:facet>   
+                    <f:facet name="header">Precio USD       |</f:facet>   
                     <h:outputText value="#{itemY[2]}">
                         <f:convertNumber currencySymbol="$" type="currency"/>
                     </h:outputText>
                 </h:column>                  
             </h:dataTable>
+        
+            <br></br>
+            
+            <strong> Total (USD):  </strong>
+            <f:facet name="header" >Total USD</f:facet>   
+            <h:outputText value="#{beanCarrito.total()}"> 
+                <f:convertNumber currencySymbol="$" type="currency"/>
+            </h:outputText>
         </h:form>>
 
     </h:body>

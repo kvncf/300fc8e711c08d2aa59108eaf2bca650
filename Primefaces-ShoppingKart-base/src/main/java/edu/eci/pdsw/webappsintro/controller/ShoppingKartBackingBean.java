@@ -38,15 +38,15 @@ public class ShoppingKartBackingBean implements Serializable{
     private String itemName="Para empezar selecciona un item: ";
     private int cantActual=0; 
     private ArrayList<String[]> ListaPedido;
-    private String moneda="COP";  
+    private String moneda="USD";  
     //private final static double tasa = CurrencyServices.getInstance().getUSDExchangeRateInCOP(); //pesos COP por 1 dolar USD
 
     public String getMoneda() {
         return moneda;
     }
 
-    public void setMoneda(String mon) {
-        moneda = mon;
+    public void setMoneda(String moneda) {
+        this.moneda = moneda;
     }
 
     public ArrayList<String[]> getListaPedido() {
@@ -148,10 +148,21 @@ public class ShoppingKartBackingBean implements Serializable{
     }    
     
     public double getValor(double precio){
-        System.out.println(moneda);
+        //System.out.println(moneda);
         double cambio = 1;
         if(moneda=="COP") cambio=getTasaCambioDolar();
         return precio*cambio;
     }
     
+    public double total(){   
+    double total=0.0;
+    //nombre, cantidad, precio
+    
+    for(int i=0;i<pedido.size();i++){           
+            if(pedido.get(i).getCantidad()!=0){
+                total += getValor(pedido.get(i).getProducto().getPrecioEnUSD())*(pedido.get(i).getCantidad());               
+            }
+        }
+    return total;
+    }
 }
