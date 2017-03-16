@@ -63,10 +63,15 @@ public class JDBCExample {
             registrarNuevoProducto(con, suCodigoECI, "kvn alvarado", 1);            
             con.commit();
             
-            //cambiarNombreProducto(con, suCodigoECI, "EL NUEVO NOMBRE");
-            //con.commit();
+            // actualizar nombre
+            suCodigoECI=2095112;
+            registrarNuevoProducto(con, suCodigoECI, "finanzas XD", 100000000);            
+            con.commit();
             
+            cambiarNombreProducto(con, suCodigoECI, "Nuevo Nombre F");
+            con.commit();
             
+            // --- actualizar nombre
             con.close();
                                    
         } catch (ClassNotFoundException | SQLException ex) {
@@ -88,14 +93,18 @@ public class JDBCExample {
         
         PreparedStatement updateSales = null;
 
-        String updateString ="insert into productos (idproducto,nombre,precio) values (?,?,?)";
+        String updateString ="insert into ORD_PRODUCTOS (codigo,nombre,precio) values (?,?,?)";
         
         con.setAutoCommit(false);
         updateSales = con.prepareStatement(updateString);
         updateSales.setInt(1, codigo);
         updateSales.setString(2, nombre);
         updateSales.setInt(3, precio);
+         try {
         updateSales.execute();
+        }catch(SQLException e) {
+            System.out.println("SQL exception occured - Codigo ya exite!" + e);
+        }
     }
     
     /**
@@ -140,17 +149,22 @@ public class JDBCExample {
      * @param codigoProducto codigo del producto cuyo nombre se cambiará
      * @param nuevoNombre el nuevo nombre a ser asignado
      */
-    public static void cambiarNombreProducto(Connection con, int codigoProducto, 
-            String nuevoNombre){
+    public static void cambiarNombreProducto(Connection con, int codigo, 
+            String nuevoNombre) throws SQLException{
         
-        //Crear prepared statement
+        PreparedStatement actualizarP = null;
+        String updateNombre = "update ORD_PRODUCTOS set nombre = ? where codigo = ?";
+        
+        con.setAutoCommit(false);
+        actualizarP = con.prepareStatement(updateNombre);
+        actualizarP.setString(1, nuevoNombre);
+        actualizarP.setInt(2, codigo);
+        actualizarP.execute();
+        
+        
         //asignar parámetros
         //usar executeUpdate
         //verificar que se haya actualizado exactamente un registro
-        
-        
     }
-    
-    
     
 }
