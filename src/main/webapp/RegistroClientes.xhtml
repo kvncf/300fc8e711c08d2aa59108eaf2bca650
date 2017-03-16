@@ -1,0 +1,82 @@
+    <!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head><title>RegistroCliente</title></h:head>    
+    <h:body>    
+    <br/><b>REGISTRO CLIENTES</b><br/><br/>
+    <h:form id="Tregistro">
+        <table >
+            <tr>
+              <td>Nombre: </td>  
+              <td>
+                  <p:inputText style="width:430px;" id="nom" type="text" required="required" value="#{ClientesBen.nombre}" placeholder="Nombre"></p:inputText>
+              </td>      
+            </tr>            
+            <tr>
+              <td>Documento: </td>      
+              <td>
+                   <p:inputText style="width:400px;" id="doc" type="number" required="required" value="#{ClientesBen.documento}" placeholder="documento"></p:inputText>
+              </td>      
+            </tr>
+            <tr>
+              <td>Telefono: </td>      
+              <td>
+                   <p:inputText style="width:430px;" id="tel" type="text" required="required" value="#{ClientesBen.telefono}" placeholder="telefono"></p:inputText>
+              </td>      
+            </tr>
+            <tr>
+              <td>Direccion: </td>      
+              <td>
+                   <p:inputText style="width:430px;" id="dir" type="text" required="required" value="#{ClientesBen.direccion}" placeholder="direccion"></p:inputText>
+              </td>      
+            </tr>
+            <tr>
+              <td>e-mail: </td>      
+              <td>
+                   <p:inputText style="width:430px;" id="ema" type="text" required="required" value="#{ClientesBen.email}" placeholder="email"></p:inputText>
+              </td>      
+            </tr> 
+        </table>
+            <br/>    
+            <br/>
+            <p:commandButton value="Registrar..." update=":listaClientes,:Tregistro" actionListener="#{ClientesBen.registrarCliente()}" ></p:commandButton>               
+    </h:form>
+    <br/><br/><hr/><br/><b>REGISTRO CLIENTES</b><br/><br/>
+    <p:dataTable id="listaClientes" var="Tcliente" value="#{ClientesBen.listaClientes}">
+        <p:column headerText="Nombre">
+            <h:outputText value="#{Tcliente.nombre}" />
+        </p:column>
+
+        <p:column headerText="Documento">
+            <h:outputText value="#{Tcliente.documento}" />
+        </p:column>
+
+        <p:column headerText="Telefono">
+            <h:outputText value="#{Tcliente.telefono}" />
+        </p:column>
+
+        <p:column headerText="Direccion">
+            <h:outputText value="#{Tcliente.direccion}" />
+        </p:column>
+        
+        <p:column headerText="e-mail">
+            <h:outputText value="#{Tcliente.email}" />
+        </p:column>
+        
+        <p:column headerText="Vetado">
+            <h:outputText value="#{Tcliente.vetado}" />
+        </p:column>        
+        
+        <p:column>
+            <p:commandButton value="Seleccionar"  action = "RegistroClienteItem">
+                
+                <f:setPropertyActionListener value="#{Tcliente}" 
+                    target="#{ClientesBen.clienteSeleccionado}" />
+            </p:commandButton>
+        </p:column> 
+    </p:dataTable>
+  
+    </h:body>
+</html>
