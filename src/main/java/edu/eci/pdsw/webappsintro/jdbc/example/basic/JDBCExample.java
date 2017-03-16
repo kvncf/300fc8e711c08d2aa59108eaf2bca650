@@ -89,19 +89,19 @@ public class JDBCExample {
      * @param precio
      * @throws SQLException 
      */
-    public static void registrarNuevoProducto(Connection con, int codigo, String nombre,int precio) throws SQLException{
+    public static void registrarNuevoProducto(Connection con, int codigo, String nombre,int precio){
         
         PreparedStatement updateSales = null;
 
         String updateString ="insert into ORD_PRODUCTOS (codigo,nombre,precio) values (?,?,?)";
         
-        con.setAutoCommit(false);
-        updateSales = con.prepareStatement(updateString);
-        updateSales.setInt(1, codigo);
-        updateSales.setString(2, nombre);
-        updateSales.setInt(3, precio);
-         try {
-        updateSales.execute();
+        try {
+            con.setAutoCommit(false);
+            updateSales = con.prepareStatement(updateString);
+            updateSales.setInt(1, codigo);
+            updateSales.setString(2, nombre);
+            updateSales.setInt(3, precio);
+            updateSales.execute();
         }catch(SQLException e) {
             System.out.println("SQL exception occured - Codigo ya exite!" + e);
         }
@@ -113,15 +113,22 @@ public class JDBCExample {
      * @param codigoPedido el código del pedido
      * @return 
      */
-    public static List<String> nombresProductosPedido(Connection con, int codigoPedido){
+    public static List<String> nombresProductosPedido(Connection con, int codigoPedido) throws SQLException{
         List<String> np=new LinkedList<>();
         
         //Crear prepared statement
+        String sql ="select P.nombre as nom from ORD_PRODUCTOS P,ORD_DETALLES_PEDIDO D where D.pedido_fk=? and producto_fk=P.codigo";
+        con.setAutoCommit(false);
+        PreparedStatement ps  = con.prepareStatement(sql);
         //asignar parámetros
+        ps.setInt(1, codigoPedido);
         //usar executeQuery
+        ResultSet rs=ps.executeQuery();
         //Sacar resultados del ResultSet
-        //Llenar la lista y retornarla
-        
+        while(rs.next()){
+            //Llenar la lista y retornarla
+            np.add(rs.getString("nom"));
+        }
         return np;
     }
 
