@@ -71,7 +71,8 @@ public class JDBCExample {
             cambiarNombreProducto(con, suCodigoECI, "Nuevo Nombre F");
             con.commit();
             
-            // --- actualizar nombre
+            System.out.println("------total de pedido--------");
+            System.out.println(valorTotalPedido(con,1));
             con.close();
                                    
         } catch (ClassNotFoundException | SQLException ex) {
@@ -139,14 +140,20 @@ public class JDBCExample {
      * @param codigoPedido código del pedido cuyo total se calculará
      * @return el costo total del pedido (suma de: cantidades*precios)
      */
-    public static int valorTotalPedido(Connection con, int codigoPedido){
+    public static int valorTotalPedido(Connection con, int codigoPedido) throws SQLException{
+        int res=-1;
         
         //Crear prepared statement
+        String sql ="select SUM(P.precio*D.cantidad) as total from ORD_PRODUCTOS P,ORD_DETALLES_PEDIDO D where D.pedido_fk=? and producto_fk=P.codigo";
+        con.setAutoCommit(false);
+        PreparedStatement ps  = con.prepareStatement(sql);
         //asignar parámetros
+        ps.setInt(1, codigoPedido);
         //usar executeQuery
+        ResultSet rs=ps.executeQuery();
         //Sacar resultado del ResultSet
-        
-        return 0;
+        if(rs.next())res=rs.getInt("total");        
+        return res;
     }
     
 
