@@ -23,6 +23,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -58,12 +59,12 @@ public class JDBCExample {
             System.out.println("-----------------------");
             
             
-            int suCodigoECI=20134423;
-            registrarNuevoProducto(con, suCodigoECI, "SU NOMBRE", 99999999);            
+            int suCodigoECI=2083722;
+            registrarNuevoProducto(con, suCodigoECI, "kvn alvarado", 1);            
             con.commit();
             
-            cambiarNombreProducto(con, suCodigoECI, "EL NUEVO NOMBRE");
-            con.commit();
+            //cambiarNombreProducto(con, suCodigoECI, "EL NUEVO NOMBRE");
+            //con.commit();
             
             
             con.close();
@@ -84,13 +85,17 @@ public class JDBCExample {
      * @throws SQLException 
      */
     public static void registrarNuevoProducto(Connection con, int codigo, String nombre,int precio) throws SQLException{
-        //Crear preparedStatement
-        //Asignar parámetros
-        //usar 'execute'
+        
+        PreparedStatement updateSales = null;
 
+        String updateString ="insert into productos (idproducto,nombre,precio) values (?,?,?)";
         
-        con.commit();
-        
+        con.setAutoCommit(false);
+        updateSales = con.prepareStatement(updateString);
+        updateSales.setInt(1, codigo);
+        updateSales.setString(2, nombre);
+        updateSales.setInt(3, precio);
+        updateSales.execute();
     }
     
     /**
