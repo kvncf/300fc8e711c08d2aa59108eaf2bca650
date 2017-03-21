@@ -36,25 +36,27 @@
         left join VI_TIPOITEM as ti on i.TIPOITEM_id=ti.id 
     </select>
     
-    <resultMap type='Maestro' id='MaestroResult'>
-        <id property='propiedad1' column='COLUMNA1'/>
-        <result property='propiedad2' column='COLUMNA2'/>
-        <result property='propiedad3' column='COLUMNA3'/>  
-        <collection property='propiedad4' ofType='DetalleUno'></collection>
-            <association property="propiedad5" javaType="DetalleDos"></association>      
+    <resultMap type='ClienteMapper' id='ClienteResult'>
+        <id property='documento' column='documento'/>
+        <result property='nombre' column='nombre'/>
+        <result property='telefono' column='telefono'/>
+        <result property='direccion' column='direccion'/>
+        <result property='email' column='email'/>
+        <result property='vetado' column='vetado'/>
+        <collection property='rentados' ofType='ItemsRentados'></collection>     
     </resultMap>
-
-    <resultMap type='DetalleUno' id='DetalleResult'>
-        <id property='propiedadx' column='COLUMNAX'/>
-        <result property='propiedady' column='COLUMNAY'/>
-        <result property='propiedadz' column='COLUMNAZ'/> 
-             <association property="propiedadw" javaType="DetalleDos"></association>      
+    
+    <resultMap type='ItemsRentados' id='IRResult'>
+        <id property='id' column='id'/>
+        <result property='fechainiciorenta' column='documento'/>
+        <result property='fechafinrenta' column='telefono'/> 
+	<association property="item" javaType="DetalleDos"></association>
     </resultMap>
-
-    <resultMap type='DetalleDos' id='DetalleResult'>
-        <id property='propiedadr' column='COLUMNAR'/>
-        <result property='propiedads' column='COLUMNAS'/>
-        <result property='propiedadt' column='COLUMNAT'/>        
+    
+    <resultMap type='ItemsRentados' id='IRResult'>
+        <id property='id' column='nombre'/>
+        <result property='fechainiciorenta' column='documento'/>
+        <result property='fechafinrenta' column='telefono'/> 
+	<association property="item" javaType="DetalleDos"></association>
     </resultMap>
-          	
 </mapper>
