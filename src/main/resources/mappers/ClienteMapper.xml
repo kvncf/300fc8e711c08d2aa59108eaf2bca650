@@ -46,17 +46,27 @@
         <collection property='rentados' ofType='ItemsRentados'></collection>     
     </resultMap>
     
-    <resultMap type='ItemsRentados' id='IRResult'>
+    <resultMap type='ItemsRentados' id='ItemsR'>
         <id property='id' column='id'/>
         <result property='fechainiciorenta' column='documento'/>
         <result property='fechafinrenta' column='telefono'/> 
-	<association property="item" javaType="DetalleDos"></association>
+            <association property="item" javaType="ArrayList"></association>
     </resultMap>
     
-    <resultMap type='ItemsRentados' id='IRResult'>
-        <id property='id' column='nombre'/>
-        <result property='fechainiciorenta' column='documento'/>
-        <result property='fechafinrenta' column='telefono'/> 
-	<association property="item" javaType="DetalleDos"></association>
+    <resultMap type='Item' id='Item'>
+        <id property='id' column='id'/>
+        <result property='nombre' column='nombre'/>
+        <result property='descripcion' column='descripcion'/> 
+        <result property='fechalanzamiento' column='fechalanzamiento'/> 
+        <result property='tarifaxdia' column='tarifaxdia'/> 
+        <result property='formatorenta' column='formatorenta'/> 
+        <result property='genero' column='genero'/> 
+            <association property="id" javaType="ArrayList"></association>
     </resultMap>
+    
+    <resultMap type='TipoItem' id='Tipo'>
+        <id property='id' column='nombre'/>
+        <result property='descripcion' column='descripcion'/>
+    </resultMap>
+    
 </mapper>
