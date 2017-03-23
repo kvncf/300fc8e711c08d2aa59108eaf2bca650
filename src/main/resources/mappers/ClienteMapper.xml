@@ -15,19 +15,20 @@
         c.email,
         c.vetado,
 
-        ir.id ,
-        ir.fechainiciorenta ,
-        ir.fechafinrenta ,
+        ir.id,
+        ir.fechainiciorenta,
+        ir.fechafinrenta,
 
-        i.id ,
-        i.nombre ,
-        i.descripcion ,
-        i.fechalanzamiento ,
-        i.tarifaxdia ,
-        i.formatorenta ,
-        i.genero ,        
-        ti.id ,
-        ti.descripcion 
+        i.id  as I_id,
+        i.nombre  as I_nombre,
+        i.descripcion  as I_descripcion,
+        i.fechalanzamiento  as I_fechalanzamiento,
+        i.tarifaxdia  as I_tarifaxdia,
+        i.formatorenta  as I_formatorenta,
+        i.genero  as I_genero,
+        
+        ti.id  as I_TI_id,
+        ti.descripcion  as I_TI_descripcion
 
 
         FROM VI_CLIENTES as c 
@@ -43,17 +44,17 @@
         <result property='direccion' column='direccion'/>
         <result property='email' column='email'/>
         <result property='vetado' column='vetado'/>
-        <collection property='rentados' ofType='ItemsRentados'></collection>     
+        <collection property='rentados' ofType='ItemsRentados' resultMap='ItemsR'></collection>     
     </resultMap>
     
     <resultMap type='ItemsRentados' id='ItemsR'>
         <id property='id' column='id'/>
-        <result property='fechainiciorenta' column='documento'/>
-        <result property='fechafinrenta' column='telefono'/> 
-            <association property="item" javaType="ArrayList"></association>
+        <result property='fechainiciorenta' column='fechainiciorenta'/>
+        <result property='fechafinrenta' column='fechafinrenta'/>
+            <association property="item" javaType="Items"  columnPrefix='I_'></association>
     </resultMap>
     
-    <resultMap type='Item' id='Item'>
+    <resultMap type='Items' id='Item'>
         <id property='id' column='id'/>
         <result property='nombre' column='nombre'/>
         <result property='descripcion' column='descripcion'/> 
@@ -61,11 +62,11 @@
         <result property='tarifaxdia' column='tarifaxdia'/> 
         <result property='formatorenta' column='formatorenta'/> 
         <result property='genero' column='genero'/> 
-            <association property="id" javaType="ArrayList"></association>
+            <association property="tipo" javaType="TipoItem" columnPrefix='TI_'></association>
     </resultMap>
     
     <resultMap type='TipoItem' id='Tipo'>
-        <id property='id' column='nombre'/>
+        <id property='id' column='id'/>
         <result property='descripcion' column='descripcion'/>
     </resultMap>
     
