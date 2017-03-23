@@ -6,6 +6,5 @@
 <mapper namespace="edu.eci.pdsw.sampleprj.dao.mybatis.mappers.TipoItemMapper">
 
     
-
                 
 </mapper>
