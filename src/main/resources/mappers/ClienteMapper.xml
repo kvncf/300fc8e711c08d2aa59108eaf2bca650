@@ -36,7 +36,7 @@
         <result property='descripcion' column='descripcion'/>
     </resultMap>
     
-    <select parameterType="map" id="getClientes" resultMap="ClienteResult">
+    <select parameterType="map" id="consultarClientes" resultMap="ClienteResult">
         select
 
         c.nombre,
