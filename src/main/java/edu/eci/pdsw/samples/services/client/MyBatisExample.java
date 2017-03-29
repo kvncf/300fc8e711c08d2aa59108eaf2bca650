@@ -20,6 +20,9 @@ package edu.eci.pdsw.samples.services.client;
 
 import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import edu.eci.pdsw.sampleprj.dao.mybatis.mappers.ClienteMapper;
+import edu.eci.pdsw.sampleprj.dao.mybatis.mappers.ItemMapper;
+import edu.eci.pdsw.samples.entities.Item;
+import edu.eci.pdsw.samples.entities.TipoItem;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
@@ -75,15 +78,32 @@ public class MyBatisExample {
         System.out.println(cm.consultarCliente(1026585664));
         //agregamos una pelicula rentada al cliente 2104835
         
-        /*
         //FUNCIONA!! SE COMENTA PORQ SOLO SE PUEDE INSERTAR UNA VEZ
         String string = "2017-03-29";
         DateFormat format = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
         Date date1 = format.parse(string);
         string = "2017-03-31";
         Date date2 = format.parse(string);
-        cm.agregarItemRentadoACliente(2104835,100000000,date1,date2);
-        */
+        //cm.agregarItemRentadoACliente(2104835,100000000,date1,date2);
+        
+        //agregamos un nuevo item FUNCIONA! se comenta para no insertar doble
+        SqlSession sqlsss = sessionfact.openSession();
+        ItemMapper im=sqlsss.getMapper(ItemMapper.class);
+        //im.insertarItem(new Item(new TipoItem(1998,"accion, sangre, comedia"),17998,"kvn y srg","muy larga de accion",date1,30000,"blurayX5","accion"));
+        
+        System.out.println("");
+        System.out.println("");
+        System.out.println("---------CONSULTANDO UN ITEM--------");
+        //consultamos un item
+        System.out.println(im.consultarItem(17998));
+        System.out.println("");
+        System.out.println("");
+        System.out.println("---------CONSULTANDO UN ITEM--------");
+        //consultamos un item
+        System.out.println(im.getItems());
+                
+        sqlsss.commit();
+        sqlsss.close();
         sqlss.commit();
         sqlss.close();
     }

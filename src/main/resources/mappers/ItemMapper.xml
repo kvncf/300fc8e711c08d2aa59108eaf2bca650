@@ -5,6 +5,33 @@
   
 <mapper namespace="edu.eci.pdsw.sampleprj.dao.mybatis.mappers.ItemMapper">
 
-
+    <resultMap type='Item' id='ItemResult'>
+        <id property='id' column='id'/>
+        <result property='nombre' column='nombre'/>
+        <result property='descripcion' column='descripcion'/> 
+        <result property='fechaLanzamiento' column='fechalanzamiento'/> 
+        <result property='tarifaxDia' column='tarifaxdia'/> 
+        <result property='formatoRenta' column='formatorenta'/> 
+        <result property='genero' column='genero'/> 
+            <association property="tipo" javaType="TipoItem"  resultMap='Tipoo' columnPrefix='TI_'></association>
+    </resultMap>
+    <resultMap type='TipoItem' id='Tipoo'>
+        <id property='id' column='id'/>
+        <result property='descripcion' column='descripcion'/>
+    </resultMap>
+    
+    <insert parameterType="map" id="insertarItem">
+        insert into VI_ITEMS (id, nombre, descripcion, fechalanzamiento, tarifaxdia, formatorenta, genero,TIPOITEM_id)
+        values(#{item.id},#{item.nombre},#{item.descripcion},#{item.fechaLanzamiento},
+        #{item.tarifaxDia},#{item.formatoRenta},#{item.genero},#{item.tipo.id});
+    </insert>
+    
+    <select parameterType="map" id="consultarItem"  resultMap="ItemResult">
+        select * from VI_ITEMS WHERE id=#{id}
+    </select>
+    
+    <select parameterType="map" id="getItems"  resultMap="ItemResult">
+        select * from VI_ITEMS
+    </select>
     
 </mapper>
