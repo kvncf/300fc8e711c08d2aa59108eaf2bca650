@@ -18,10 +18,16 @@ package edu.eci.pdsw.samples.services.client;
 
 
 
+import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import edu.eci.pdsw.sampleprj.dao.mybatis.mappers.ClienteMapper;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -58,11 +64,26 @@ public class MyBatisExample {
      * @param args
      * @throws SQLException 
      */
-    public static void main(String args[]) throws SQLException {
+    public static void main(String args[]) throws SQLException, ParseException {
         SqlSessionFactory sessionfact = getSqlSessionFactory();
         SqlSession sqlss = sessionfact.openSession();
         ClienteMapper cm=sqlss.getMapper(ClienteMapper.class);
         System.out.println(cm.consultarClientes());
+        System.out.println("");
+        System.out.println("");
+        System.out.println("---------CONSULTANDO UN CLIENTE--------");
+        System.out.println(cm.consultarCliente(1026585664));
+        //agregamos una pelicula rentada al cliente 2104835
+        
+        /*
+        //FUNCIONA!! SE COMENTA PORQ SOLO SE PUEDE INSERTAR UNA VEZ
+        String string = "2017-03-29";
+        DateFormat format = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
+        Date date1 = format.parse(string);
+        string = "2017-03-31";
+        Date date2 = format.parse(string);
+        cm.agregarItemRentadoACliente(2104835,100000000,date1,date2);
+        */
         sqlss.commit();
         sqlss.close();
     }
