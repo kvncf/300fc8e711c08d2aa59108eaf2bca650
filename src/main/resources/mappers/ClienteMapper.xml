@@ -19,19 +19,19 @@
         <id property='id' column='id'/>
         <result property='fechainiciorenta' column='fechainiciorenta'/>
         <result property='fechafinrenta' column='fechafinrenta'/>
-            <association property="item" javaType="Item"  columnPrefix='I_'></association>
+            <association property="item" javaType="Item"  resultMap='Itemm' columnPrefix='I_'></association>
     </resultMap>
     <resultMap type='Item' id='Itemm'>
         <id property='id' column='id'/>
         <result property='nombre' column='nombre'/>
         <result property='descripcion' column='descripcion'/> 
-        <result property='fechalanzamiento' column='fechalanzamiento'/> 
-        <result property='tarifaxdia' column='tarifaxdia'/> 
-        <result property='formatorenta' column='formatorenta'/> 
+        <result property='fechaLanzamiento' column='fechalanzamiento'/> 
+        <result property='tarifaxDia' column='tarifaxdia'/> 
+        <result property='formatoRenta' column='formatorenta'/> 
         <result property='genero' column='genero'/> 
-            <association property="tipo" javaType="TipoItem" columnPrefix='TI_'></association>
+            <association property="tipo" javaType="TipoItem"  resultMap='Tipoo' columnPrefix='TI_'></association>
     </resultMap>
-    <resultMap type='TipoItem' id='Tipo'>
+    <resultMap type='TipoItem' id='Tipoo'>
         <id property='id' column='id'/>
         <result property='descripcion' column='descripcion'/>
     </resultMap>
@@ -58,8 +58,8 @@
         i.formatorenta  as I_formatorenta,
         i.genero  as I_genero,
         
-        ti.id  as TI_id,
-        ti.descripcion  as TI_descripcion
+        ti.id  as I_TI_id,
+        ti.descripcion  as I_TI_descripcion
 
 
         FROM VI_CLIENTES as c 
